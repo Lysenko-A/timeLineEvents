@@ -1,0 +1,18 @@
+{
+  "name": "api-shop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.4.11",
+    "nodemon": "^1.18.10"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start:dev": "nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
