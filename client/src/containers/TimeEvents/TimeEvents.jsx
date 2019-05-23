@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import Table from '../../components/Table';
-import { convertDateTimeEvents } from '../../utils/utils';
+import PanelEvent from './PanelEvent';
 
 class TimeEvents extends PureComponent {
 
@@ -9,16 +9,16 @@ class TimeEvents extends PureComponent {
   }
 
   renderTime = () => {
-    const { timeEvents } = this.props;
-    const data = convertDateTimeEvents(timeEvents.timeEvents.timeEvents, 9, 17);
+    const { timeLine } = this.props;
 
-    return <Table times={data}/>;
+    return <Table times={timeLine.timeLine}/>;
   };
 
 
   render() {
     return (
       <div>
+        <PanelEvent/>
         {this.renderTime()}
       </div>
     );

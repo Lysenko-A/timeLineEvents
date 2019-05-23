@@ -7,7 +7,7 @@ import { request } from '../../utils/request';
 function* getTimeEvents() {
     const timeEvents = yield call(request('get', LIST_TIME_EVENTS_PATH ));
     yield put({
-        type: [LIST_TIME_EVENTS_SUCCESS],
+        type: LIST_TIME_EVENTS_SUCCESS,
         payload: timeEvents.data.timeEvents
     });
 }

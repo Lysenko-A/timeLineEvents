@@ -10,7 +10,7 @@ import {getListTimeEventsAction} from './actionTimeEvents';
 export default connect(
     // null,
     (state) => ({
-        timeEvents: state
+        timeLine: state.timeEvents
     }),
     { getListTimeEvents: getListTimeEventsAction }
 )(TimeEvents);

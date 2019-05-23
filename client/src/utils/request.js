@@ -1,5 +1,5 @@
 import axios from 'axios';
+import {API_URL} from '../constants/app.config';
 
-const baseURL = 'http://localhost:5000';
 
-export const request = (method, url, configs) => (params) => axios[method](`${baseURL}${url}`, params, configs);
+export const request = (method, url, configs) => (params) => axios[method](`${API_URL}${url}`, params, configs);

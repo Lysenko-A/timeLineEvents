@@ -16,10 +16,10 @@ const Table = ({ times }) => {
       </thead>
       <tbody>
       {
-        timeLine.map(time => (
+          timeLine && timeLine.map(time => (
           <tr key={time}>
             <td>{time.replace("-", ":")}</td>
-            <td><Cell events={times[time].events}/></td>
+            <td><Cell events={times[time] && times[time].events}/></td>
           </tr>
 
         ))
@@ -30,7 +30,7 @@ const Table = ({ times }) => {
 };
 
 Table.propTypes = {
-  times: PropTypes.object,
+  times: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
 };
 
 export default Table;

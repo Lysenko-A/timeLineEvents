@@ -26,20 +26,3 @@ function sortTimes(times) {
         return time.split(' ')[0].split('-').map(x => +x);
     }
 };
-
-export function convertDateTimeEvents(date, startTime, endTime ) {
-    let timeLine = createTimeLine(startTime, endTime);
-
-    const newTime = {};
-    date.forEach(time => {
-        newTime[time.time] = time;
-    });
-
-    timeLine.forEach(time => {
-        if (!newTime[time]) {
-            newTime[time] = {};
-        }
-    });
-
-    return newTime;
-}
