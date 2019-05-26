@@ -6,18 +6,23 @@ class TimeEvents extends PureComponent {
 
   componentWillMount() {
     this.props.getListTimeEvents();
-  }
+  };
+
+  handlerDeleteEvent = id => {
+    const { deleteEvent, getListTimeEvents} = this.props;
+    deleteEvent(id, getListTimeEvents);
+  };
 
   renderTime = () => {
     const { timeLine } = this.props;
-
-    return <Table times={timeLine.timeLine}/>;
+    return <Table times={timeLine.timeLine} deleteEvent={this.handlerDeleteEvent}/>;
   };
 
 
   render() {
+
     return (
-      <div>
+      <div className="container">
         <PanelEvent/>
         {this.renderTime()}
       </div>

@@ -1,16 +1,15 @@
 import {connect} from 'react-redux';
 import TimeEvents from './TimeEvents';
-import {getListTimeEventsAction} from './actionTimeEvents';
-
-// const mapStateToProps = (state) => {
-//     const {timeEvents} = state.timeEvents;
-//     return {timeEvents};
-// };
+import { deleteEventAction, getListTimeEventsAction } from './actionTimeEvents';
 
 export default connect(
     // null,
     (state) => ({
         timeLine: state.timeEvents
     }),
-    { getListTimeEvents: getListTimeEventsAction }
+    {
+      getListTimeEvents: getListTimeEventsAction,
+      deleteEvent: deleteEventAction,
+    },
 )(TimeEvents);
+

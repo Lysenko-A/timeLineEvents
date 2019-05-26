@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Cell from '../Cell';
 import { createTimeLine } from '../../utils/utils';
 
-const Table = ({ times }) => {
+const Table = ({ times, deleteEvent }) => {
   const timeLine = createTimeLine(9, 17);
 
   return (
@@ -19,7 +19,8 @@ const Table = ({ times }) => {
           timeLine && timeLine.map(time => (
           <tr key={time}>
             <td>{time.replace("-", ":")}</td>
-            <td><Cell events={times[time] && times[time].events}/></td>
+            <td className="table-cell">
+              <Cell events={times[time] && times[time].events} deleteEvent={deleteEvent}/></td>
           </tr>
 
         ))
@@ -31,6 +32,7 @@ const Table = ({ times }) => {
 
 Table.propTypes = {
   times: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+  deleteEvent: PropTypes.func
 };
 
 export default Table;

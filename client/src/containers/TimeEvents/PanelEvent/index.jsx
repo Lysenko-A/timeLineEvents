@@ -1,6 +1,9 @@
 import React, { PureComponent } from 'react';
-import { Formik } from 'formik';
+import { Field, Formik } from 'formik';
 import * as yup from 'yup';
+import FormikTimePicker from './FormikTimePicker';
+import { connect } from 'react-redux';
+import { addTimeEventAction, getListTimeEventsAction } from '../actionTimeEvents';
 
 const validationSchema = yup.object().shape({
   title: yup
@@ -14,50 +17,77 @@ const validationSchema = yup.object().shape({
     .required(),
 });
 
-class PanelEvent extends PureComponent {
-  onSubmit = (values, actions) => {
-  };
+function validateTime(value) {
+  let error;
+  let time = +value.format('HHmm');
 
+  if (time < 899) {
+    error = 'min time 9:00';
+  } else if (time > 1631) {
+    error = 'max time 16:30';
+  }
+  return error;
+}
+
+class PanelEvent extends PureComponent {
+  onSubmit = (values, { setSubmitting, setFieldError }) => {
+    const { addTimeEvent, getListTimeEvents } = this.props;
+    const { title, startTime, endTime } = values;
+    const duration = endTime.diff(startTime);
+    const newEventTime = {
+      time:  startTime.format('HH-mm'),
+      event: [
+        {
+          title,
+          startTime: startTime.format('HH:mm'),
+          duration,
+        }
+      ]
+    };
+
+    if(Math.sign(duration) === -1) {
+      setFieldError('endTime', 'end time must be longer than start time');
+    }
+
+    addTimeEvent(newEventTime, getListTimeEvents);
+    setSubmitting(false);
+  };
 
   render() {
     return (
       <div>
         <Formik
           onSubmit={this.onSubmit}
+          initialValues={{ title: '' }}
           validationSchema={validationSchema}
           render={props => {
-            const { handleSubmit, handleBlur, values, errors } = props;
+            const { handleSubmit, errors, handleChange, handleBlur, values } = props;
             return (
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit}  className="form">
                 <div>
                   <input
                     type="text"
-                    onChange={handleSubmit}
+                    placeholder="title"
+                    onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.title}
                     name="title"
                   />
-                  {errors.title && <div id="feedback">{errors.title}</div>}
+                  {errors.title && <div className="error">{errors.title}</div>}
                 </div>
                 <div>
-                  <input
-                    type="number"
-                    onChange={handleSubmit}
-                    onBlur={handleBlur}
-                    value={values.startTime}
+                  <Field
                     name="startTime"
+                    validate={validateTime}
+                    component={FormikTimePicker}
                   />
-                  {errors.startTime && <div id="feedback">{errors.startTime}</div>}
                 </div>
                 <div>
-                  <input
-                    type="number"
-                    onChange={handleSubmit}
-                    onBlur={handleBlur}
-                    value={values.endTime}
+                  <Field
                     name="endTime"
+                    validate={validateTime}
+                    component={FormikTimePicker}
                   />
-                  {errors.endTime && <div id="feedback">{errors.endTime}</div>}
                 </div>
                 <button type="submit">Add event</button>
               </form>
@@ -69,4 +99,10 @@ class PanelEvent extends PureComponent {
   }
 }
 
-export default PanelEvent;
+export default connect(
+  null,
+  {
+    getListTimeEvents: getListTimeEventsAction,
+    addTimeEvent: addTimeEventAction
+  },
+)(PanelEvent);
