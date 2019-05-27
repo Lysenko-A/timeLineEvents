@@ -1,0 +1,36 @@
+%time-duration {
+  position: relative;
+
+  &:before {
+    position: absolute;
+    content: '';
+    left: -2px;
+    top: 0;
+    background-color: $light;
+    border-left: 2px solid $light-blue;
+    width: 100%;
+  }
+}
+
+
+@for $i from 0 through 9  {
+  $height: $heightCellHours * $i;
+
+  .time-duration-0#{$i}-00 {
+    @extend %time-duration;
+    &:before {
+      height: #{$height};
+    }
+  }
+}
+
+@for $i from 0 through 9  {
+  $height: $heightCellHours * $i + $heightCell;
+
+  .time-duration-0#{$i}-30 {
+    @extend %time-duration;
+    &:before {
+      height: #{$height};
+    }
+  }
+}
